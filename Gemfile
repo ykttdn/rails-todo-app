@@ -24,6 +24,8 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
+gem 'faker'
+
 group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
