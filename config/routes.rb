@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   namespace :api do
-    resources :todos, only: %i[index show]
+    resources :todos, only: %i[index show create]
   end
 end

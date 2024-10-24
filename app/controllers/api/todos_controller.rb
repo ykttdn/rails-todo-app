@@ -17,5 +17,21 @@ module Api
     rescue ActiveRecord::RecordNotFound
       render json: { todo: nil, error: [RECORD_NOT_FOUND] }, status: :not_found
     end
+
+    def create
+      todo = Todo.new(todo_params)
+
+      if todo.save
+        render json: { todo:, error: nil }
+      else
+        render json: { todo: nil, error: todo.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+
+    private
+
+    def todo_params
+      params.require(:todo).permit(:title)
+    end
   end
 end
