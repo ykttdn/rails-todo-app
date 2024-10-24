@@ -40,6 +40,15 @@ module Api
       render json: { todo: nil, error: [RECORD_NOT_FOUND] }, status: :not_found
     end
 
+    def destroy
+      todo = Todo.find(params[:id])
+
+      todo.destroy
+      head :no_content
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: [RECORD_NOT_FOUND] }, status: :not_found
+    end
+
     private
 
     def todo_params
