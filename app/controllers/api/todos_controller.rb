@@ -28,6 +28,18 @@ module Api
       end
     end
 
+    def update
+      todo = Todo.find(params[:id])
+
+      if todo.update(todo_params)
+        render json: { todo:, error: nil }
+      else
+        render json: { todo:, error: todo.errors.full_messages }, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound
+      render json: { todo: nil, error: [RECORD_NOT_FOUND] }, status: :not_found
+    end
+
     private
 
     def todo_params
