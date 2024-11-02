@@ -28,8 +28,11 @@ gem 'faker'
 
 group :development do
   gem 'rubocop', require: false
+  gem 'rubocop-factory_bot', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
 end
 
 group :development, :test do
@@ -38,4 +41,7 @@ group :development, :test do
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
+
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 7.0.0'
 end
