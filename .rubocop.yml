@@ -12,5 +12,8 @@ AllCops:
     - 'db/schema.rb'
   NewCops: enable
 
+RSpec/NestedGroups:
+  Max: 4
+
 Style/Documentation:
   Enabled: false
