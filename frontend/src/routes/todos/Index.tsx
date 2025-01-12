@@ -1,35 +1,15 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import { useGetRequest } from '../../hooks/useGetRequest';
 import type { Todo } from './types/todo';
 
+type Response = Todo[];
+
 export function Index() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [error, setError] = useState<unknown>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchTodos = async () => {
-      setIsLoading(true);
-
-      try {
-        const response = await fetch('http://localhost:3000/api/todos');
-
-        if (response.ok) {
-          const todos: Todo[] = await response.json();
-          setTodos(todos);
-        } else {
-          setError('Unhandled error');
-        }
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchTodos();
-  }, []);
+  const {
+    data: todos,
+    error,
+    isLoading,
+  } = useGetRequest<Response>('http://localhost:3000/api/todos');
 
   return (
     <>

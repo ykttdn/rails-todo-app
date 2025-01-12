@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useGetRequest } from '../../hooks/useGetRequest';
 import type { Todo } from './types/todo';
 
 type Response = {
@@ -10,33 +10,10 @@ type Response = {
 export function TodoItem() {
   const { id } = useParams();
 
-  const [todo, setTodo] = useState<Todo>();
-  const [error, setError] = useState<unknown>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchTodo = async () => {
-      setIsLoading(true);
-
-      try {
-        const response = await fetch(`http://localhost:3000/api/todos/${id}`);
-
-        if (response.ok) {
-          const data: Response = await response.json();
-          setTodo(data.todo);
-        } else {
-          setError('Unhandled error');
-        }
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchTodo();
-  }, [id]);
+  const { data, error, isLoading } = useGetRequest<Response>(
+    `http://localhost:3000/api/todos/${id}`,
+  );
+  const todo = data?.todo;
 
   return (
     <>
