@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 export function Index() {
   type Todo = {
@@ -46,7 +47,11 @@ export function Index() {
         todos && (
           <ol>
             {todos.map((todo) => {
-              return <li key={todo.id}>{todo.title}</li>;
+              return (
+                <li key={todo.id}>
+                  <Link to={`todos/${todo.id}`}>{todo.title}</Link>
+                </li>
+              );
             })}
           </ol>
         )
