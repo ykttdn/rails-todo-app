@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-
-type Todo = {
-  id: number;
-  title: string;
-  created_at: string;
-  updated_at: string;
-};
+import type { Todo } from './types/todo';
 
 type Response = {
   todo: Todo;

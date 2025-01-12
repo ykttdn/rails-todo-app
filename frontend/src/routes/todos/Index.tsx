@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import type { Todo } from './types/todo';
 
 export function Index() {
-  type Todo = {
-    id: number;
-    title: string;
-    created_at: string;
-    updated_at: string;
-  };
-
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<unknown>(null);
   const [isLoading, setIsLoading] = useState(false);
