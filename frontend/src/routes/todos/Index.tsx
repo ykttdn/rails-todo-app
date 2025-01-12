@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function App() {
+export function Index() {
   type Todo = {
     id: number;
     title: string;
@@ -54,5 +54,3 @@ function App() {
     </>
   );
 }
-
-export default App;
