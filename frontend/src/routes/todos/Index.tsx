@@ -23,7 +23,9 @@ export function Index() {
             {todos.map((todo) => {
               return (
                 <li key={todo.id}>
-                  <Link to={`todos/${todo.id}`}>{todo.title}</Link>
+                  <Link to={`todos/${todo.id}`} className="text-gray-600 hover:text-orange-500">
+                    {todo.title}
+                  </Link>
                 </li>
               );
             })}
