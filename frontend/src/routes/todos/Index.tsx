@@ -23,22 +23,20 @@ export function Index() {
           <ol className="flex flex-col gap-2">
             {todos.map((todo) => {
               return (
-                <>
-                  <li key={todo.id}>
-                    <Card>
-                      <CardHeader className="p-0">
-                        <CardTitle>
-                          <Link
-                            to={`todos/${todo.id}`}
-                            className="block p-6 text-gray-600 hover:text-orange-500"
-                          >
-                            {todo.title}
-                          </Link>
-                        </CardTitle>
-                      </CardHeader>
-                    </Card>
-                  </li>
-                </>
+                <li key={todo.id}>
+                  <Card>
+                    <CardHeader className="p-0">
+                      <CardTitle>
+                        <Link
+                          to={`todos/${todo.id}`}
+                          className="block p-6 text-gray-600 hover:text-orange-500"
+                        >
+                          {todo.title}
+                        </Link>
+                      </CardTitle>
+                    </CardHeader>
+                  </Card>
+                </li>
               );
             })}
           </ol>
