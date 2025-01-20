@@ -3,14 +3,12 @@ import { Link } from 'react-router';
 import { useGetRequest } from '../../hooks/useGetRequest';
 import type { Todo } from './types/todo';
 
-type Response = Todo[];
-
 export function Index() {
   const {
     data: todos,
     error,
     isLoading,
-  } = useGetRequest<Response>('http://localhost:3000/api/todos');
+  } = useGetRequest<Todo[]>('http://localhost:3000/api/todos');
 
   return (
     <>
