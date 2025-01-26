@@ -25,8 +25,21 @@ export function TodoItem() {
     formState: { isDirty },
   } = useForm<EditablePartOfTodo>();
 
-  const onSubmit: SubmitHandler<EditablePartOfTodo> = (formData) => {
-    console.log(formData);
+  const onSubmit: SubmitHandler<EditablePartOfTodo> =  async (formData) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        const responseJson: {todo:Todo, error: []} = await response.json()
+        console.error(responseJson.error);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (isLoading) {
