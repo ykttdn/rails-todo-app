@@ -13,8 +13,13 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isDirty },
-  } = useForm<EditablePartOfTodo>();
+  } = useForm<EditablePartOfTodo>({
+    defaultValues: {
+      title: todo.title,
+    },
+  });
 
   const onSubmit: SubmitHandler<EditablePartOfTodo> = async (formData) => {
     try {
@@ -26,7 +31,9 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
       const responseJson: { todo: Todo; error: [] } = await response.json();
 
       if (response.ok) {
-        setTodo(responseJson.todo);
+        const updatedTodo = responseJson.todo;
+        setTodo(updatedTodo);
+        reset({ title: updatedTodo.title });
       } else {
         console.error(responseJson.error);
       }
@@ -39,7 +46,7 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="title">Title</label>
-        <input id="title" defaultValue={todo.title} {...register('title')} />
+        <input id="title" {...register('title')} />
         <Button type="submit" disabled={!isDirty}>
           Update
         </Button>
