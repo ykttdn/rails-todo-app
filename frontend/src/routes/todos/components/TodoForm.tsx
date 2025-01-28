@@ -1,12 +1,15 @@
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { Todo } from '../types/todo';
 
-type TodoFormProps = { todo: Todo; id: string };
+type TodoFormProps = { initialTodo: Todo; id: string };
 
 type EditablePartOfTodo = Omit<Todo, 'id' | 'created_at' | 'updated_at'>;
 
-export function TodoForm({ todo, id }: TodoFormProps) {
+export function TodoForm({ initialTodo, id }: TodoFormProps) {
+  const [todo, setTodo] = useState(initialTodo);
+
   const {
     register,
     handleSubmit,
@@ -20,9 +23,11 @@ export function TodoForm({ todo, id }: TodoFormProps) {
         body: JSON.stringify(formData),
         headers: { 'Content-Type': 'application/json' },
       });
+      const responseJson: { todo: Todo; error: [] } = await response.json();
 
-      if (!response.ok) {
-        const responseJson: { todo: Todo; error: [] } = await response.json();
+      if (response.ok) {
+        setTodo(responseJson.todo);
+      } else {
         console.error(responseJson.error);
       }
     } catch (e) {
