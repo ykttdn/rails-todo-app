@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { Todo } from '../types/todo';
+import { FormErrors } from './FormErrors';
 
 type TodoFormProps = { initialTodo: Todo; id: string };
 
@@ -9,6 +10,7 @@ type EditablePartOfTodo = Omit<Todo, 'id' | 'created_at' | 'updated_at'>;
 
 export function TodoForm({ initialTodo, id }: TodoFormProps) {
   const [todo, setTodo] = useState(initialTodo);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const {
     register,
@@ -35,7 +37,7 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
         setTodo(updatedTodo);
         reset({ title: updatedTodo.title });
       } else {
-        console.error(responseJson.error);
+        setErrors(responseJson.error);
       }
     } catch (e) {
       console.error(e);
@@ -45,6 +47,7 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {errors.length > 0 && <FormErrors errors={errors} />}
         <label htmlFor="title">Title</label>
         <input id="title" {...register('title')} />
         <Button type="submit" disabled={!isDirty}>
