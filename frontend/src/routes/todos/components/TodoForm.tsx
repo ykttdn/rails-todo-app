@@ -16,11 +16,12 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
     register,
     handleSubmit,
     reset,
-    formState: { isDirty },
+    formState: { errors: validationErrors, isDirty, isValid },
   } = useForm<EditablePartOfTodo>({
     defaultValues: {
       title: todo.title,
     },
+    mode: 'onChange',
   });
 
   const onSubmit: SubmitHandler<EditablePartOfTodo> = async (formData) => {
@@ -49,8 +50,11 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         {errors.length > 0 && <FormErrors errors={errors} />}
         <label htmlFor="title">Title</label>
-        <input id="title" {...register('title')} />
-        <Button type="submit" disabled={!isDirty}>
+        {validationErrors.title?.message && (
+          <p className="text-red-700">{validationErrors.title?.message}</p>
+        )}
+        <input id="title" {...register('title', { required: "Title can't be blank" })} />
+        <Button type="submit" disabled={!(isDirty && isValid)}>
           Update
         </Button>
       </form>
