@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { useGetRequest } from '../../hooks/useGetRequest';
+import { TodoForm } from './components/TodoForm';
 import type { Todo } from './types/todo';
 
 type Response = {
@@ -15,22 +16,13 @@ export function TodoItem() {
   );
   const todo = data?.todo;
 
-  return (
-    <>
-      {isLoading ? (
-        <p>Fetching todo...</p>
-      ) : error ? (
-        <p>Error occurred while fetching todo</p>
-      ) : (
-        todo && (
-          <ul>
-            <li>{todo.id}</li>
-            <li>{todo.title}</li>
-            <li>{todo.created_at}</li>
-            <li>{todo.updated_at}</li>
-          </ul>
-        )
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <p>Fetching todo...</p>;
+  }
+
+  if (error) {
+    return <p>Error occurred while fetching todo</p>;
+  }
+
+  return <>{todo && id && <TodoForm initialTodo={todo} id={id} />}</>;
 }
