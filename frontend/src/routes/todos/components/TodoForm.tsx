@@ -66,6 +66,7 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
             {...register('title', {
               required: "Title can't be blank",
               maxLength: { value: 140, message: 'Title is too long (maximum is 140 characters)' },
+              pattern: { value: /^(?![\x20\u3000]*$).*/, message: "Title can't be blank" },
             })}
           />
         </Field>
