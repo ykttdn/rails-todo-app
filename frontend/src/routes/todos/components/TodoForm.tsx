@@ -1,4 +1,5 @@
 import { Button, Field, Input, Label } from '@headlessui/react';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { Todo } from '../types/todo';
@@ -72,8 +73,8 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
       </form>
 
       <ul className="mt-4">
-        <li>created: {todo.created_at}</li>
-        <li>updated: {todo.updated_at}</li>
+        <li>created: {dayjs(todo.created_at).format('YYYY/MM/DD HH:mm:ss')}</li>
+        <li>updated: {dayjs(todo.updated_at).format('YYYY/MM/DD HH:mm:ss')}</li>
       </ul>
     </>
   );
