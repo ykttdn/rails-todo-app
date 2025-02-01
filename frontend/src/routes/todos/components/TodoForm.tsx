@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@headlessui/react';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { Todo } from '../types/todo';
@@ -54,7 +54,7 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
           <p className="text-red-700">{validationErrors.title?.message}</p>
         )}
         <input id="title" {...register('title', { required: "Title can't be blank" })} />
-        <Button type="submit" disabled={!(isDirty && isValid)}>
+        <Button type="submit" disabled={!(isDirty && isValid)} className="btn btn-neutral">
           Update
         </Button>
       </form>
