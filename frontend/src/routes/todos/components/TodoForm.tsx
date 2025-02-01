@@ -1,4 +1,4 @@
-import { Button } from '@headlessui/react';
+import { Button, Field, Input, Label } from '@headlessui/react';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { Todo } from '../types/todo';
@@ -47,18 +47,31 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         {errors.length > 0 && <FormErrors errors={errors} />}
-        <label htmlFor="title">Title</label>
-        {validationErrors.title?.message && (
-          <p className="text-red-700">{validationErrors.title?.message}</p>
-        )}
-        <input id="title" {...register('title', { required: "Title can't be blank" })} />
+
+        <Field className="flex flex-col gap-2">
+          <Label htmlFor="title" className="font-medium">
+            Title
+          </Label>
+
+          {validationErrors.title?.message && (
+            <p className="text-red-700">{validationErrors.title?.message}</p>
+          )}
+
+          <Input
+            id="title"
+            className="input input-bordered"
+            {...register('title', { required: "Title can't be blank" })}
+          />
+        </Field>
+
         <Button type="submit" disabled={!(isDirty && isValid)} className="btn btn-neutral">
           Update
         </Button>
       </form>
-      <ul>
+
+      <ul className="mt-4">
         <li>created: {todo.created_at}</li>
         <li>updated: {todo.updated_at}</li>
       </ul>
