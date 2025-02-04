@@ -23,5 +23,17 @@ RSpec.describe Todo do
 
       it { expect(todo).not_to be_valid }
     end
+
+    context "when title's length is 140" do
+      let(:title) { 'a' * 140 }
+
+      it { expect(todo).to be_valid }
+    end
+
+    context 'when title is longer than 140 characters' do
+      let(:title) { 'a' * 141 }
+
+      it { expect(todo).not_to be_valid }
+    end
   end
 end
