@@ -11,6 +11,12 @@ export function Index() {
 
   return (
     <>
+      <div className="mb-2">
+        <Link to={'todos/new'} className="btn btn-neutral">
+          New todo
+        </Link>
+      </div>
+
       {isLoading ? (
         <p>Fetching todos...</p>
       ) : error ? (
