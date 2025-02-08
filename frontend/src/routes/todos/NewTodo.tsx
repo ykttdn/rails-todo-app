@@ -1,6 +1,7 @@
 import { Button, Field, Input, Label } from '@headlessui/react';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { FormErrors } from './components/FormErrors';
 import type { Todo } from './types/todo';
 
@@ -14,6 +15,7 @@ export function NewTodo() {
   } = useForm<EditablePartOfTodo>({
     mode: 'onChange',
   });
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<EditablePartOfTodo> = async (formData) => {
     try {
@@ -24,7 +26,7 @@ export function NewTodo() {
       });
 
       if (response.ok) {
-        console.log('ok');
+        navigate('/');
       } else {
         const responseJson: { todo: null; error: [] } = await response.json();
         setErrors(responseJson.error);
