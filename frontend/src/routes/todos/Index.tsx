@@ -9,6 +9,20 @@ export function Index() {
     isLoading,
   } = useGetRequest<Todo[]>('http://localhost:3000/api/todos');
 
+  const handleClick = async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        window.alert('Failed to delete todo');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
       <div className="mb-2">
@@ -34,7 +48,11 @@ export function Index() {
                     {todo.title}
                   </Link>
                   <div className="pr-4">
-                    <button type="button" className="btn btn-outline btn-error">
+                    <button
+                      type="button"
+                      className="btn btn-outline btn-error"
+                      onClick={() => handleClick(todo.id)}
+                    >
                       Delete
                     </button>
                   </div>
