@@ -23,7 +23,7 @@ export function Index() {
       ) : error ? (
         <p>Error occurred while fetching todos</p>
       ) : (
-        todos && <TodoList todos={todos} />
+        todos && <TodoList initialTodos={todos} />
       )}
     </>
   );

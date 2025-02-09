@@ -1,18 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import type { Todo } from '../types/todo';
 
 type TodoListProps = {
-  todos: Todo[];
+  initialTodos: Todo[];
 };
 
-export function TodoList({ todos }: TodoListProps) {
+export function TodoList({ initialTodos }: TodoListProps) {
+  const [todos, setTodos] = useState(initialTodos);
+
   const handleClick = async (id: number) => {
     try {
       const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
         method: 'DELETE',
       });
 
-      if (!response.ok) {
+      if (response.ok) {
+        const newTodos = todos.filter((todo) => todo.id !== id);
+        setTodos(newTodos);
+      } else {
         window.alert('Failed to delete todo');
       }
     } catch (e) {
