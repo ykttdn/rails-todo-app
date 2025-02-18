@@ -22,6 +22,53 @@ afterEach(() => {
   cleanup();
 });
 
+describe('validation', () => {
+  describe('title', () => {
+    test('invalid when title is blank', async () => {
+      const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
+      await user.clear(titleTextBox);
+
+      expect(screen.getByText("Title can't be blank")).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeDisabled();
+    });
+
+    test('invalid when title is too long', async () => {
+      const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
+      await user.clear(titleTextBox);
+      await user.type(titleTextBox, 'a'.repeat(141));
+
+      expect(screen.getByText('Title is too long (maximum is 140 characters)')).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeDisabled();
+    });
+
+    test('invalid when title includes only space', async () => {
+      const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
+      await user.clear(titleTextBox);
+      await user.type(titleTextBox, ' ');
+
+      expect(screen.getByText("Title can't be blank")).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeDisabled();
+
+      await user.clear(titleTextBox);
+      await user.type(titleTextBox, '　'); // double-byte space
+
+      expect(screen.getByText("Title can't be blank")).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeDisabled();
+    });
+
+    test('no errors are shown when input is valid', async () => {
+      const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
+      await user.clear(titleTextBox);
+
+      expect(screen.getByText("Title can't be blank")).toBeInTheDocument();
+
+      await user.type(titleTextBox, 'foo');
+
+      expect(screen.queryByText("Title can't be blank")).not.toBeInTheDocument();
+    });
+  });
+});
+
 describe('submit button', () => {
   test('initially disabled', () => {
     expect(screen.getByRole('button')).toBeDisabled();
