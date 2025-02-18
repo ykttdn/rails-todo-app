@@ -22,6 +22,12 @@ afterEach(() => {
   cleanup();
 });
 
+describe('initial values', () => {
+  test('initial values are set', () => {
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('do the dishes');
+  });
+});
+
 describe('validation', () => {
   describe('title', () => {
     test('invalid when title is blank', async () => {
