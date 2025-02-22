@@ -1,10 +1,15 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { server } from '@/mocks/node';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import type { Todo } from '../types/todo';
 import { TodoForm } from './TodoForm';
 
 const user = userEvent.setup();
+
+beforeAll(() => {
+  server.listen();
+});
 
 beforeEach(() => {
   const id = '1';
@@ -20,6 +25,11 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
 });
 
 describe('initial values', () => {
@@ -96,5 +106,22 @@ describe('submit button', () => {
     await user.type(titleTextBox, 'do the dishes');
 
     expect(screen.getByRole('button')).toBeDisabled();
+  });
+});
+
+describe('submission', () => {
+  describe('when succeeds', () => {
+    test('form values are reset and button is disabled', async () => {
+      const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
+      await user.clear(titleTextBox);
+      await user.type(titleTextBox, 'do the laundry');
+
+      await user.click(screen.getByRole('button'));
+
+      waitFor(() => {
+        expect(titleTextBox).toHaveValue('do the laundry');
+        expect(screen.getByRole('button')).toBeDisabled();
+      });
+    });
   });
 });
