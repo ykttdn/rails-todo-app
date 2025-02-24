@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route element={<Root />}>
           <Route path="/" element={<Index />} />
-          <Route path="todos/:id" element={<TodoItem />} />
+          <Route path="todos/:id/edit" element={<TodoItem />} />
           <Route path="todos/new" element={<NewTodo />} />
         </Route>
       </Routes>
