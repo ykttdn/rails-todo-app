@@ -8,7 +8,7 @@ type Response = {
   error: [];
 };
 
-export function TodoItem() {
+export function EditTodo() {
   const { id } = useParams();
 
   const { data, error, isLoading } = useGetRequest<Response>(
