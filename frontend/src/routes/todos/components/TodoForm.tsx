@@ -2,19 +2,19 @@ import { Button, Field, Input, Label } from '@headlessui/react';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import type { Todo, TodoFormData } from '../types/todo';
 import { FormErrors } from './FormErrors';
 
 type TodoFormProps = { initialTodo: Todo };
 
 export function TodoForm({ initialTodo }: TodoFormProps) {
-  const [todo, setTodo] = useState(initialTodo);
+  const todo = initialTodo;
   const [errors, setErrors] = useState<string[]>([]);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors: validationErrors, isDirty, isValid },
   } = useForm<TodoFormData>({
     defaultValues: {
@@ -22,6 +22,8 @@ export function TodoForm({ initialTodo }: TodoFormProps) {
     },
     mode: 'onChange',
   });
+
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TodoFormData> = async (formData) => {
     try {
@@ -33,9 +35,7 @@ export function TodoForm({ initialTodo }: TodoFormProps) {
       const responseJson: { todo: Todo; error: [] } = await response.json();
 
       if (response.ok) {
-        const updatedTodo = responseJson.todo;
-        setTodo(updatedTodo);
-        reset({ title: updatedTodo.title });
+        navigate('/');
       } else {
         setErrors(responseJson.error);
       }

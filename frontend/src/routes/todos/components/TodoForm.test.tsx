@@ -1,11 +1,20 @@
 import { server } from '@/mocks/node';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 import type { Todo } from '../types/todo';
 import { TodoForm } from './TodoForm';
 
 const user = userEvent.setup();
+
+const mockedNavigate = vi.fn();
+vi.mock('react-router', async () => {
+  const module = await vi.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...module,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 beforeAll(() => {
   server.listen();
@@ -110,17 +119,14 @@ describe('submit button', () => {
 
 describe('submission', () => {
   describe('when succeeds', () => {
-    test('form values are reset and button is disabled', async () => {
+    test('navigate to root page', async () => {
       const titleTextBox = screen.getByRole('textbox', { name: 'Title' });
       await user.clear(titleTextBox);
       await user.type(titleTextBox, 'do the laundry');
 
       await user.click(screen.getByRole('button'));
 
-      waitFor(() => {
-        expect(titleTextBox).toHaveValue('do the laundry');
-        expect(screen.getByRole('button')).toBeDisabled();
-      });
+      expect(mockedNavigate).toHaveBeenCalledWith('/');
     });
   });
 });
