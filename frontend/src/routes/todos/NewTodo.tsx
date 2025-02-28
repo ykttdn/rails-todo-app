@@ -3,21 +3,20 @@ import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { FormErrors } from './components/FormErrors';
-import type { Todo } from './types/todo';
+import type { TodoFormData } from './types/todo';
 
-type EditablePartOfTodo = Omit<Todo, 'id' | 'created_at' | 'updated_at'>;
 export function NewTodo() {
   const [errors, setErrors] = useState<string[]>([]);
   const {
     register,
     handleSubmit,
     formState: { errors: validationErrors, isValid },
-  } = useForm<EditablePartOfTodo>({
+  } = useForm<TodoFormData>({
     mode: 'onChange',
   });
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<EditablePartOfTodo> = async (formData) => {
+  const onSubmit: SubmitHandler<TodoFormData> = async (formData) => {
     try {
       const response = await fetch('http://localhost:3000/api/todos', {
         method: 'POST',

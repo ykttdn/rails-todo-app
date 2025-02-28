@@ -24,5 +24,5 @@ export function TodoItem() {
     return <p>Error occurred while fetching todo</p>;
   }
 
-  return <>{todo && id && <TodoForm initialTodo={todo} id={id} />}</>;
+  return <>{todo && <TodoForm initialTodo={todo} />}</>;
 }

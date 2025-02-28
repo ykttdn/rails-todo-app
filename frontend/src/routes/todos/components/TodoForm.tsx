@@ -2,14 +2,12 @@ import { Button, Field, Input, Label } from '@headlessui/react';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
-import type { Todo } from '../types/todo';
+import type { Todo, TodoFormData } from '../types/todo';
 import { FormErrors } from './FormErrors';
 
-type TodoFormProps = { initialTodo: Todo; id: string };
+type TodoFormProps = { initialTodo: Todo };
 
-type EditablePartOfTodo = Omit<Todo, 'id' | 'created_at' | 'updated_at'>;
-
-export function TodoForm({ initialTodo, id }: TodoFormProps) {
+export function TodoForm({ initialTodo }: TodoFormProps) {
   const [todo, setTodo] = useState(initialTodo);
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -18,16 +16,16 @@ export function TodoForm({ initialTodo, id }: TodoFormProps) {
     handleSubmit,
     reset,
     formState: { errors: validationErrors, isDirty, isValid },
-  } = useForm<EditablePartOfTodo>({
+  } = useForm<TodoFormData>({
     defaultValues: {
       title: todo.title,
     },
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<EditablePartOfTodo> = async (formData) => {
+  const onSubmit: SubmitHandler<TodoFormData> = async (formData) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/todos/${todo.id}`, {
         method: 'PATCH',
         body: JSON.stringify(formData),
         headers: { 'Content-Type': 'application/json' },
