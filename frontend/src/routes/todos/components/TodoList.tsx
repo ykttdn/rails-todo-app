@@ -9,7 +9,15 @@ type TodoListProps = {
 export function TodoList({ initialTodos }: TodoListProps) {
   const [todos, setTodos] = useState(initialTodos);
 
-  const handleClick = async (id: number) => {
+  const handleClick = async (id: number, title: string) => {
+    if (
+      !window.confirm(
+        `Do you want to delete the todo "${title}"? (This operation cannot be undone)`,
+      )
+    ) {
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
         method: 'DELETE',
@@ -41,7 +49,7 @@ export function TodoList({ initialTodos }: TodoListProps) {
               <button
                 type="button"
                 className="btn btn-outline btn-error"
-                onClick={() => handleClick(todo.id)}
+                onClick={() => handleClick(todo.id, todo.title)}
               >
                 Delete
               </button>
