@@ -24,5 +24,5 @@ export function EditTodo() {
     return <p>Error occurred while fetching todo</p>;
   }
 
-  return <>{todo && <TodoForm initialTodo={todo} />}</>;
+  return <>{todo && <TodoForm todo={todo} />}</>;
 }

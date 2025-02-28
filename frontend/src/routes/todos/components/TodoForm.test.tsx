@@ -21,14 +21,14 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  const initialTodo: Todo = {
+  const todo: Todo = {
     id: 1,
     title: 'do the dishes',
     created_at: '2025-01-01T00:00:00.000Z',
     updated_at: '2025-02-03T20:00:00.000Z',
   };
 
-  render(<TodoForm initialTodo={initialTodo} />);
+  render(<TodoForm todo={todo} />);
 });
 
 afterEach(() => {

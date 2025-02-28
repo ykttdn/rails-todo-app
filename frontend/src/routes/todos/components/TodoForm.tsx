@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router';
 import type { Todo, TodoFormData } from '../types/todo';
 import { FormErrors } from './FormErrors';
 
-type TodoFormProps = { initialTodo: Todo };
+type TodoFormProps = { todo: Todo };
 
-export function TodoForm({ initialTodo }: TodoFormProps) {
-  const todo = initialTodo;
+export function TodoForm({ todo }: TodoFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
 
   const {
