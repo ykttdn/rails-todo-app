@@ -8,7 +8,7 @@ type Response = {
   error: [];
 };
 
-export function TodoItem() {
+export function EditTodo() {
   const { id } = useParams();
 
   const { data, error, isLoading } = useGetRequest<Response>(
@@ -24,5 +24,5 @@ export function TodoItem() {
     return <p>Error occurred while fetching todo</p>;
   }
 
-  return <>{todo && <TodoForm initialTodo={todo} />}</>;
+  return <>{todo && <TodoForm todo={todo} />}</>;
 }

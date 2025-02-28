@@ -40,7 +40,7 @@ export function TodoList({ initialTodos }: TodoListProps) {
         return (
           <li key={todo.id} className="flex items-center rounded-lg border-2 border-gray-200">
             <Link
-              to={`todos/${todo.id}`}
+              to={`todos/${todo.id}/edit`}
               className="block grow p-6 text-2xl font-semibold text-gray-600 hover:text-orange-500"
             >
               {todo.title}
