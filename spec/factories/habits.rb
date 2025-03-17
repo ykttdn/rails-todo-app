@@ -2,5 +2,16 @@
 
 FactoryBot.define do
   factory :habit do
+    name { Faker::Lorem.sentence }
+
+    trait :with_logs do
+      transient do
+        logs_count { 3 }
+      end
+
+      after(:create) do |habit, evaluator|
+        create_list(:habit_log, evaluator.logs_count, habit: habit)
+      end
+    end
   end
 end
