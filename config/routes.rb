@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   namespace :api do
+    resources :habits do
+      resources :habit_logs, only: :index
+    end
+
     resources :todos, only: %i[index show create update destroy]
   end
 end
