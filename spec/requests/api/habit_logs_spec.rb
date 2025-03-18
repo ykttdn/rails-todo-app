@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Api::HabitLogs' do
   describe 'GET /api/habits/:habit_id/habit_logs' do
     let(:logs_count) { 5 }
-    let(:habit) { create(:habit, :with_logs, logs_count: logs_count) }
+    let(:habit) { create(:habit, :with_logs, logs_count:) }
 
     it 'returns a 200 OK status' do
       get "/api/habits/#{habit.id}/habit_logs"
