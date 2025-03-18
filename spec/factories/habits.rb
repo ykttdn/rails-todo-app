@@ -10,7 +10,7 @@ FactoryBot.define do
       end
 
       after(:create) do |habit, evaluator|
-        create_list(:habit_log, evaluator.logs_count, habit: habit)
+        create_list(:habit_log, evaluator.logs_count, habit:)
       end
     end
   end
