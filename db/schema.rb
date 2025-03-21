@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_15_152708) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_21_132819) do
   create_table "habit_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "habit_id", null: false
     t.date "executed_at", null: false
+    t.integer "level", limit: 1, default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["habit_id"], name: "index_habit_logs_on_habit_id"
