@@ -13,3 +13,11 @@
 100.times do
   Todo.create!(title: Faker::Lorem.sentence)
 end
+
+habit = Habit.create!(name: Faker::Lorem.sentence)
+
+day_range = Date.current.last_year..Date.current
+level_range = 1..3
+200.times do
+  HabitLog.create!(habit:, executed_at: rand(day_range), level: rand(level_range))
+end
