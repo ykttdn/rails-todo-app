@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       resources :habit_logs, only: :index
     end
 
+    get 'habit_logs', to: 'habit_logs#index_all'
+
     resources :todos, only: %i[index show create update destroy]
   end
 end
